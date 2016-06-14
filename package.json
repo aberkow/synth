@@ -1,0 +1,36 @@
+{
+  "name": "synth",
+  "version": "1.0.0",
+  "description": "A synthesizer made in ToneJS and nexusUI",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "./node_modules/.bin/webpack-dev-server --content-base build --inline --hot --port 3000",
+    "webpack-watch": "./node_modules/.bin/webpack --watch"
+  },
+  "keywords": [
+    "synthesizer",
+    "music",
+    "tone",
+    "nexus"
+  ],
+  "author": "Adam Berkowitz",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "soundcloud": "^3.1.2",
+    "tone": "^0.6.1"
+  },
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "jshint": "^2.9.2",
+    "node-bourbon": "^4.2.8",
+    "node-neat": "^1.7.2",
+    "node-sass": "^3.7.0",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-stream": "^3.2.0"
+  }
+}

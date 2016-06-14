@@ -1,0 +1,58 @@
+//bring in external style, mixins, and grid layout
+@import 'normalize';
+@import 'bourbon';
+@import 'neat';
+
+//media queries
+$phone: 'min-width: 375px';
+$tablet: 'min-width: 768px';
+$desktop: 'min-width: 1024px';
+
+//style variables
+$mainColor: #303F9F;
+$accentColor: #ff5722;
+$textColor: #fff;
+$linkColor: #c5cae9;
+
+//center mixin
+@mixin centerer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $mainColor;
+}
+
+
+.header {
+  background: tint($mainColor, 40%);
+  margin: 0;
+  height: 4rem;
+}
+
+.header__title {
+  font-size: 2.5rem;
+  color: $textColor;
+  margin: 0;
+  @media screen and ($tablet){
+    font-size: 4rem;
+  }
+}
+
+.keyboard {
+  .keyboard__ui {
+    height: 8rem;
+    width: 25rem;
+    @media screen and ($tablet){
+      height: 10rem;
+      width: 35rem;
+    }
+  }
+}

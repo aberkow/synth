@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Synth</title>
+  <link rel="stylesheet" href="./build/css/styles.css">
+  <script src = './js/nexusUI.js'></script>
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__title">Synth</h1>
+  </header>
+  <!--The keyboard -->
+  <section class="keyboard">
+    <canvas class='keyboard__ui' nx = 'keyboard'></canvas>
+  </section>
+
+  <!--Synth controls -->
+  <section class="synthControls">
+    <canvas class="synthControls__waves" nx = 'select' label='Waves'></canvas>
+    <canvas class="synthControls__waves" nx = 'select' label='Waves'></canvas>
+    <canvas class="synthControls__envelope" nx = 'envelope' label='ADSR'></canvas>
+    <canvas class="synthControls__envelope" nx = 'envelope' label='ADSR'></canvas>
+  </section>
+
+  <!-- General effects -->
+  <section class="synthEffcts">
+    <canvas class="synthEffects__delay" nx = 'dial' label='Delay'></canvas>
+    <canvas class="synthEffects__distortion" nx = 'dial' label='Distortion'></canvas>
+    <canvas class="synthEffects__chorus" nx = 'position' label='Chorus'></canvas>
+  </section>
+<!-- footer -->
+  <footer class="footer">
+
+  </footer>
+
+  <script type="text/javascript" src = './build/js/bundle.js'></script>
+</body>
+</html>
