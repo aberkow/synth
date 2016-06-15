@@ -1,34 +1,31 @@
 var tone = require('tone');
 
 //keyboard reqs
-var duoSynth = require('./duoSynth.js');
-var keyboardConfig = require('./keyboardConfig.js');
+var duoSynth = require('./synth/duoSynth.js');
+var keyboardConfig = require('./synth/keyboardConfig.js');
 
 //keyboard effect reqs
-var harmonicityConfig = require('./harmonicityConfig.js');
-var vibratoConfig = require('./vibratoConfig.js');
+var harmonicityConfig = require('./synth/harmonicityConfig.js');
+var vibratoConfig = require('./synth/vibratoConfig.js');
+//var voiceWaveConfig = require('./synth/voiceWaveConfig.js');
 
-//var duoSynth = new tone.DuoSynth().toMaster();
+//effect reqs
+var chorusConfig = require('./effects/chorusConfig.js');
+var delayConfig = require('./effects/delayConfig.js');
+var distortionConfig = require('./effects/distortionConfig.js');
 
-//general effects
-var delay = new tone.FeedbackDelay('16n', 0.5).toMaster();
-var chorus = new tone.Chorus(4, 2.5, 0.5, {type: 'square'}).toMaster();
-var distortion = new tone.Distortion(0).toMaster();
-
-//connections to duoSynth
-duoSynth.connect(delay);
-duoSynth.connect(chorus);
-duoSynth.connect(distortion);
-
+//load the synth and all effects
 nx.onload = function(){
+  console.log(duoSynth);
   var waveChoices = ['sine', 'sawtooth', 'square', 'triangle'];
   var filterChoices = ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'];
+  // var asdrArray = [data.points[0].y, data.points[1].y, data.points[2].y, data.points[3].y];
 
   //keyboard control
   keyboard1.on('*', function(data){
     keyboardConfig(data);
   });
-  
+
   //controls for the synthesizer
   //select waveforms for synthesizer
   voiceWave1.choices = waveChoices;
@@ -36,6 +33,9 @@ nx.onload = function(){
   voiceWave2.choices = waveChoices;
   voiceWave2.init();
   voiceWave1.on('*', function(data){
+    // var voiceWave = duoSynth.voice0.oscillator.type;
+    // voiceWaveConfig(data, voiceWave);
+    //voiceWaveConfig(data, voice0);
     duoSynth.voice0.oscillator.type = data.text;
   });
   voiceWave2.on('*', function(data){
@@ -43,7 +43,10 @@ nx.onload = function(){
   });
   //asdr envelopes for synth
   asdr1.on('*', function(data){
-    console.log(data);
+    // duoSynth.voice0.envelope.attack = asdrArray[0];
+    // duoSynth.voice0.envelope.decay = asdrArray[1];
+    // duoSynth.voice0.envelope.sustain = asdrArray[2];
+    // duoSynth.voice0.envelope.release = asdrArray[3];
     duoSynth.voice0.envelope.attack = data.points[0].y;
     duoSynth.voice0.envelope.decay = data.points[1].y;
     duoSynth.voice0.envelope.sustain = data.points[2].y;
@@ -94,34 +97,26 @@ nx.onload = function(){
     var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
     var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
     duoSynth.voice0.filter.Q.input.value = qValue;
-    duoSynth.voice1.filter.frequency.input.value = freqValue;
+    duoSynth.voice0.filter.frequency.input.value = freqValue;
   });
   qAndFreq2.on('*', function(data){
     var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
     var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
-    duoSynth.voice0.filter.Q.input.value = qValue;
+    duoSynth.voice1.filter.Q.input.value = qValue;
     duoSynth.voice1.filter.frequency.input.value = freqValue;
   });
 
   //controls for effects
   //delay control
   delayControl.on('*', function(data){
-    delay.delayTime.value = data.value;
+    delayConfig(data);
   });
   //distortion control
   distortionControl.on('*', function(data){
-    distortion.distortion = data.value;
-    if (data.value >= 0 && data.value <= 0.33){
-      distortion.oversample = 'none';
-    } else if (data.value >= 0.34 && data.value <= 0.67){
-      distortion.oversample = '2x';
-    } else {
-      distortion.oversample = '4x';
-    }
+    distortionConfig(data);
   });
   //chorus control
   chorusControl.on('*', function(data){
-    chorus.depth = data.x;
-    chorus.feedback = data.y;
+    chorusConfig(data);
   });
 }

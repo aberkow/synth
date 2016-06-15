@@ -47,34 +47,31 @@
 	var tone = __webpack_require__(1);
 	
 	//keyboard reqs
-	var duoSynth = __webpack_require__(3);
-	var keyboardConfig = __webpack_require__(2);
+	var duoSynth = __webpack_require__(11);
+	var keyboardConfig = __webpack_require__(14);
 	
 	//keyboard effect reqs
-	var harmonicityConfig = __webpack_require__(5);
-	var vibratoConfig = __webpack_require__(4);
+	var harmonicityConfig = __webpack_require__(15);
+	var vibratoConfig = __webpack_require__(16);
+	//var voiceWaveConfig = require('./synth/voiceWaveConfig.js');
 	
-	//var duoSynth = new tone.DuoSynth().toMaster();
+	//effect reqs
+	var chorusConfig = __webpack_require__(10);
+	var delayConfig = __webpack_require__(12);
+	var distortionConfig = __webpack_require__(13);
 	
-	//general effects
-	var delay = new tone.FeedbackDelay('16n', 0.5).toMaster();
-	var chorus = new tone.Chorus(4, 2.5, 0.5, {type: 'square'}).toMaster();
-	var distortion = new tone.Distortion(0).toMaster();
-	
-	//connections to duoSynth
-	duoSynth.connect(delay);
-	duoSynth.connect(chorus);
-	duoSynth.connect(distortion);
-	
+	//load the synth and all effects
 	nx.onload = function(){
+	  console.log(duoSynth);
 	  var waveChoices = ['sine', 'sawtooth', 'square', 'triangle'];
 	  var filterChoices = ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'];
+	  // var asdrArray = [data.points[0].y, data.points[1].y, data.points[2].y, data.points[3].y];
 	
 	  //keyboard control
 	  keyboard1.on('*', function(data){
 	    keyboardConfig(data);
 	  });
-	  
+	
 	  //controls for the synthesizer
 	  //select waveforms for synthesizer
 	  voiceWave1.choices = waveChoices;
@@ -82,6 +79,9 @@
 	  voiceWave2.choices = waveChoices;
 	  voiceWave2.init();
 	  voiceWave1.on('*', function(data){
+	    // var voiceWave = duoSynth.voice0.oscillator.type;
+	    // voiceWaveConfig(data, voiceWave);
+	    //voiceWaveConfig(data, voice0);
 	    duoSynth.voice0.oscillator.type = data.text;
 	  });
 	  voiceWave2.on('*', function(data){
@@ -89,7 +89,10 @@
 	  });
 	  //asdr envelopes for synth
 	  asdr1.on('*', function(data){
-	    console.log(data);
+	    // duoSynth.voice0.envelope.attack = asdrArray[0];
+	    // duoSynth.voice0.envelope.decay = asdrArray[1];
+	    // duoSynth.voice0.envelope.sustain = asdrArray[2];
+	    // duoSynth.voice0.envelope.release = asdrArray[3];
 	    duoSynth.voice0.envelope.attack = data.points[0].y;
 	    duoSynth.voice0.envelope.decay = data.points[1].y;
 	    duoSynth.voice0.envelope.sustain = data.points[2].y;
@@ -140,35 +143,27 @@
 	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
 	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
 	    duoSynth.voice0.filter.Q.input.value = qValue;
-	    duoSynth.voice1.filter.frequency.input.value = freqValue;
+	    duoSynth.voice0.filter.frequency.input.value = freqValue;
 	  });
 	  qAndFreq2.on('*', function(data){
 	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
 	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
-	    duoSynth.voice0.filter.Q.input.value = qValue;
+	    duoSynth.voice1.filter.Q.input.value = qValue;
 	    duoSynth.voice1.filter.frequency.input.value = freqValue;
 	  });
 	
 	  //controls for effects
 	  //delay control
 	  delayControl.on('*', function(data){
-	    delay.delayTime.value = data.value;
+	    delayConfig(data);
 	  });
 	  //distortion control
 	  distortionControl.on('*', function(data){
-	    distortion.distortion = data.value;
-	    if (data.value >= 0 && data.value <= 0.33){
-	      distortion.oversample = 'none';
-	    } else if (data.value >= 0.34 && data.value <= 0.67){
-	      distortion.oversample = '2x';
-	    } else {
-	      distortion.oversample = '4x';
-	    }
+	    distortionConfig(data);
 	  });
 	  //chorus control
 	  chorusControl.on('*', function(data){
-	    chorus.depth = data.x;
-	    chorus.feedback = data.y;
+	    chorusConfig(data);
 	  });
 	}
 
@@ -19862,10 +19857,90 @@
 	} (this));
 
 /***/ },
-/* 2 */
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var duoSynth = __webpack_require__(3);
+	var tone = __webpack_require__(1);
+	var duoSynth = __webpack_require__(11);
+	
+	var chorus = new tone.Chorus(4, 2.5, 0.5, {type: 'square'}).toMaster();
+	
+	duoSynth.connect(chorus);
+	
+	var chorusConfig = function(data){
+	  chorus.depth = data.x;
+	  chorus.feedback = data.y;
+	}
+	
+	module.exports = chorusConfig;
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tone = __webpack_require__(1);
+	var duoSynth = new tone.DuoSynth().toMaster();
+	
+	module.exports = duoSynth;
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tone = __webpack_require__(1);
+	var duoSynth = __webpack_require__(11);
+	
+	var delay = new tone.FeedbackDelay('16n', 0.5).toMaster();
+	
+	duoSynth.connect(delay);
+	
+	var delayConfig = function(data){
+	  delay.delayTime.value = data.value;
+	}
+	
+	module.exports = delayConfig;
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tone = __webpack_require__(1);
+	var duoSynth = __webpack_require__(11);
+	
+	var distortion = new tone.Distortion(0).toMaster();
+	
+	duoSynth.connect(distortion);
+	
+	var distortionConfig = function(data){
+	  distortion.distortion = data.value;
+	  if (data.value >= 0 && data.value <= 0.33){
+	    distortion.oversample = 'none';
+	  } else if (data.value >= 0.34 && data.value <= 0.67){
+	    distortion.oversample = '2x';
+	  } else {
+	    distortion.oversample = '4x';
+	  }
+	}
+	
+	module.exports = distortionConfig;
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(11);
 	
 	var keyboardConfig = function(data){
 	  var frequency;
@@ -19895,20 +19970,24 @@
 
 
 /***/ },
-/* 3 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var tone = __webpack_require__(1);
-	var duoSynth = new tone.DuoSynth().toMaster();
+	var duoSynth = __webpack_require__(11);
 	
-	module.exports = duoSynth;
+	var harmonicityConfig = function(data){
+	  var harmonicityRatio = nx.scale(data.value, 0.0, 1.0, 0.0, 2.0);
+	  duoSynth.harmonicity.value = harmonicityRatio;
+	}
+	
+	module.exports = harmonicityConfig;
 
 
 /***/ },
-/* 4 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var duoSynth = __webpack_require__(3);
+	var duoSynth = __webpack_require__(11);
 	
 	var vibratoConfig = function(data){
 	  var vibratoRate = nx.scale(data.x, 0.0, 1.0, 0.0, 20.0);
@@ -19917,20 +19996,6 @@
 	}
 	
 	module.exports = vibratoConfig;
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var duoSynth = __webpack_require__(3);
-	
-	var harmonicityConfig = function(data){
-	  var harmonicityRatio = nx.scale(data.value, 0.0, 1.0, 0.0, 2.0);
-	  duoSynth.harmonicity.value = harmonicityRatio;
-	}
-	
-	module.exports = harmonicityConfig;
 
 
 /***/ }
