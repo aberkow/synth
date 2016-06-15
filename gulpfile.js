@@ -33,7 +33,7 @@ gulp.task('webpack', function(){
     .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('default', ['jshint', 'sass', 'watch']);
+
 
 gulp.task('buildStyles', function(){
   return gulp.src('css/*.css')
@@ -42,4 +42,8 @@ gulp.task('buildStyles', function(){
     .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('build', ['webpack', 'sass', 'buildStyles']);
+gulp.task('updateStyles', ['sass', 'buildStyles']);
+
+gulp.task('default', ['jshint', 'sass', 'watch']);
+
+gulp.task('build', ['jshint', 'webpack', 'sass', 'buildStyles']);

@@ -367,7 +367,7 @@ body {
 
 .header {
   background: #838cc5;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   height: 4rem; }
 
 .header__title {
@@ -380,16 +380,47 @@ body {
     font-size: 4rem; } }
 
 .keyboard {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); }
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+
+.keyboard::after {
+  clear: both;
+  content: "";
+  display: table; }
 
 .keyboard .keyboard__ui {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 48.82117%;
+  margin-left: 25.58941%;
   height: 8rem;
-  width: 25rem; }
+  width: 24rem; }
+
+.keyboard .keyboard__ui:last-child {
+  margin-right: 0; }
 
 @media screen and (min-width: 768px) {
   .keyboard .keyboard__ui {
     height: 10rem;
     width: 35rem; } }
+
+.synthControls {
+  margin: 0.5rem; }
+
+.synthControls__wrapper-waves {
+  text-align: center; }
+
+.synthControls__waves {
+  width: 11rem;
+  height: 3rem;
+  display: inline-block;
+  font-size: 24px; }
+
+.synthControls__wrapper-env {
+  text-align: center; }
+
+.synthControls__envelope {
+  width: 11.5rem;
+  display: inline-block; }

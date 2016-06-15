@@ -33,7 +33,7 @@ body {
 
 .header {
   background: tint($mainColor, 40%);
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   height: 4rem;
 }
 
@@ -47,12 +47,40 @@ body {
 }
 
 .keyboard {
+  @include outer-container;
+  // text-align: center;
   .keyboard__ui {
+    @include span-columns(6);
+    @include shift(3);
     height: 8rem;
-    width: 25rem;
+    width: 24rem;
     @media screen and ($tablet){
       height: 10rem;
       width: 35rem;
     }
   }
+}
+
+.synthControls {
+  margin: 0.5rem;
+}
+
+.synthControls__wrapper-waves {
+  text-align: center;
+}
+
+.synthControls__waves {
+  width: 11rem;
+  height: 3rem;
+  display: inline-block;
+  font-size: 24px;
+}
+
+.synthControls__wrapper-env {
+  text-align: center;;
+}
+
+.synthControls__envelope {
+  width: 11.5rem;
+  display: inline-block;
 }

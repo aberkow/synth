@@ -17,18 +17,41 @@
 
   <!--Synth controls -->
   <section class="synthControls">
-    <canvas class="synthControls__waves" nx = 'select' label='Waves'></canvas>
-    <canvas class="synthControls__waves" nx = 'select' label='Waves'></canvas>
-    <canvas class="synthControls__envelope" nx = 'envelope' label='ADSR'></canvas>
-    <canvas class="synthControls__envelope" nx = 'envelope' label='ADSR'></canvas>
+    <div class="synthControls__wrapper">
+      <canvas class="synthControls__waves" nx = 'select' id="voiceWave1"
+      ></canvas>
+      <canvas class="synthControls__waves" nx = 'select' id="voiceWave2"></canvas>
+    </div>
+    <div class="synthControls__wrapper">
+      <canvas class="synthControls__envelope" nx = 'envelope' id="asdr1"></canvas>
+      <canvas class="synthControls__envelope" nx = 'envelope' id="asdr2"></canvas>
+    </div>
+    <div class="synthControls__wrapper">
+      <canvas class="position" nx = 'position' id="vibrato"></canvas>
+      <canvas class="synthControls__dial" nx = 'dial' id="harmonicity"></canvas>
+    </div>
+    <div class="synthControls__wrapper">
+      <canvas class="synthControls__filters" nx = 'select' id="filterType1"
+      ></canvas>
+      <canvas class="synthControls__filters" nx = 'select' id="filterType2"></canvas>
+    </div>
+    <div class="synthControls__wrapper">
+      <canvas class="synthControls__envelope" nx = 'envelope' id="filterAsdr1"></canvas>
+      <canvas class="synthControls__envelope" nx = 'envelope' id="filterAsdr2"></canvas>
+    </div>
+    <div class="synthControls__wrapper">
+      <canvas id="qAndFreq1" nx = 'position' class="position"></canvas>
+      <canvas id="qAndFreq2" nx = 'position' class="position"></canvas>
+    </div>
+
   </section>
 
   <!-- General effects -->
-  <section class="synthEffcts">
-    <canvas class="synthEffects__delay" nx = 'dial' label='Delay'></canvas>
-    <canvas class="synthEffects__distortion" nx = 'dial' label='Distortion'></canvas>
-    <canvas class="synthEffects__chorus" nx = 'position' label='Chorus'></canvas>
-  </section>
+  <!-- <section class="synthEffcts">
+    <canvas class="synthEffects__delay" nx = 'dial' id="delay"></canvas>
+    <canvas class="synthEffects__distortion" nx = 'dial' id="distortion"></canvas>
+    <canvas class="synthEffects__chorus" nx = 'position' id="chorus"></canvas>
+  </section> -->
 <!-- footer -->
   <footer class="footer">
 
