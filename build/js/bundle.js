@@ -46,7 +46,15 @@
 
 	var tone = __webpack_require__(1);
 	
-	var duoSynth = new tone.DuoSynth().toMaster();
+	//keyboard reqs
+	var duoSynth = __webpack_require__(3);
+	var keyboardConfig = __webpack_require__(2);
+	
+	//keyboard effect reqs
+	var harmonicityConfig = __webpack_require__(5);
+	var vibratoConfig = __webpack_require__(4);
+	
+	//var duoSynth = new tone.DuoSynth().toMaster();
 	
 	//general effects
 	var delay = new tone.FeedbackDelay('16n', 0.5).toMaster();
@@ -59,32 +67,19 @@
 	duoSynth.connect(distortion);
 	
 	nx.onload = function(){
+	  var waveChoices = ['sine', 'sawtooth', 'square', 'triangle'];
+	  var filterChoices = ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'];
+	
 	  //keyboard control
 	  keyboard1.on('*', function(data){
-	    console.log(data);
-	    var frequency;
-	    if (data.on > 0){
-	      //convert the midi note value from data.note to frequency in Hz.
-	      frequency = 440 * Math.pow(2.0, (data.note - 69.0) / 12.0);
-	      //apply the adsr envelopes
-	      asdr1.start();
-	      asdr2.start();
-	      //trigger the note
-	      duoSynth.triggerAttack(frequency);
-	
-	    } else {
-	      //stop the adsr envelopes
-	      asdr1.stop();
-	      asdr2.stop();
-	      duoSynth.triggerRelease();
-	    }
+	    keyboardConfig(data);
 	  });
-	
+	  
 	  //controls for the synthesizer
 	  //select waveforms for synthesizer
-	  voiceWave1.choices = ['sine', 'sawtooth', 'square', 'triangle'];
+	  voiceWave1.choices = waveChoices;
 	  voiceWave1.init(); //call init() to populate the select boxes.
-	  voiceWave2.choices = ['sine', 'sawtooth', 'square', 'triangle'];
+	  voiceWave2.choices = waveChoices;
 	  voiceWave2.init();
 	  voiceWave1.on('*', function(data){
 	    duoSynth.voice0.oscillator.type = data.text;
@@ -108,21 +103,18 @@
 	  });
 	  //vibrato
 	  vibrato.on('*', function(data){
-	    var vibratoRate = nx.scale(data.x, 0.0, 1.0, 0.0, 20.0);
-	    console.log(vibratoRate);
-	    duoSynth.vibratoAmount = data.y;
-	    duoSynth.vibratoRate = vibratoRate;
+	    vibratoConfig(data);
 	  });
 	  //harmonicity
 	  harmonicity.set({ value: 0.5 });
 	  harmonicity.on('*', function(data){
-	    var harmonicityRatio = nx.scale(data.value, 0.0, 1.0, 0.0, 2.0);
-	    duoSynth.harmonicity.value = harmonicityRatio;
+	    harmonicityConfig(data);
 	  });
 	  //filter select
-	  filterType1.choices = ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'];
+	
+	  filterType1.choices = filterChoices;
 	  filterType1.init(); //call init() to populate the select boxes.
-	  filterType2.choices = ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'];
+	  filterType2.choices = filterChoices;
 	  filterType2.init();
 	  filterType1.on('*', function(data){
 	    duoSynth.voice0.filter._type = data.text;
@@ -146,36 +138,38 @@
 	  //filter Q and rolloff
 	  qAndFreq1.on('*', function(data){
 	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
+	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
 	    duoSynth.voice0.filter.Q.input.value = qValue;
-	    duoSynth.voice1.filter.frequency.input.value = data.y;
+	    duoSynth.voice1.filter.frequency.input.value = freqValue;
 	  });
 	  qAndFreq2.on('*', function(data){
 	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
+	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
 	    duoSynth.voice0.filter.Q.input.value = qValue;
-	    duoSynth.voice1.filter.frequency.input.value = data.y;
+	    duoSynth.voice1.filter.frequency.input.value = freqValue;
 	  });
 	
 	  //controls for effects
-	  //dial1 - delay control
-	  // delay.on('*', function(data){
-	  //   delay.delayTime.value = data.value;
-	  // });
-	  // //dial2 - distortion control
-	  // distortion.on('*', function(data){
-	  //   distortion.distortion = data.value;
-	  //   if (data.value >= 0 && data.value <= 0.33){
-	  //     distortion.oversample = 'none';
-	  //   } else if (data.value >= 0.34 && data.value <= 0.67){
-	  //     distortion.oversample = '2x';
-	  //   } else {
-	  //     distortion.oversample = '4x';
-	  //   }
-	  // });
-	  // //position1 - chorus control
-	  // chorus.on('*', function(data){
-	  //   chorus.depth = data.x;
-	  //   chorus.feedback = data.y;
-	  // });
+	  //delay control
+	  delayControl.on('*', function(data){
+	    delay.delayTime.value = data.value;
+	  });
+	  //distortion control
+	  distortionControl.on('*', function(data){
+	    distortion.distortion = data.value;
+	    if (data.value >= 0 && data.value <= 0.33){
+	      distortion.oversample = 'none';
+	    } else if (data.value >= 0.34 && data.value <= 0.67){
+	      distortion.oversample = '2x';
+	    } else {
+	      distortion.oversample = '4x';
+	    }
+	  });
+	  //chorus control
+	  chorusControl.on('*', function(data){
+	    chorus.depth = data.x;
+	    chorus.feedback = data.y;
+	  });
 	}
 
 
@@ -19866,6 +19860,78 @@
 			root.Tone = Tone;
 		}
 	} (this));
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(3);
+	
+	var keyboardConfig = function(data){
+	  var frequency;
+	  if (data.on > 0){
+	    //convert the midi note value from data.note to frequency in Hz.
+	    frequency = nx.mtof(data.note);
+	    //apply the adsr envelopes
+	    asdr1.start();
+	    asdr2.start();
+	    //apply the filter asdr envelopes
+	    filterAsdr1.start();
+	    filterAsdr2.start();
+	    //trigger the note
+	    duoSynth.triggerAttack(frequency);
+	
+	  } else {
+	    //stop all adsr envelopes
+	    asdr1.stop();
+	    asdr2.stop();
+	    filterAsdr1.stop();
+	    filterAsdr2.stop();
+	    duoSynth.triggerRelease();
+	  }
+	}
+	
+	module.exports = keyboardConfig;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var tone = __webpack_require__(1);
+	var duoSynth = new tone.DuoSynth().toMaster();
+	
+	module.exports = duoSynth;
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(3);
+	
+	var vibratoConfig = function(data){
+	  var vibratoRate = nx.scale(data.x, 0.0, 1.0, 0.0, 20.0);
+	  duoSynth.vibratoAmount = data.y;
+	  duoSynth.vibratoRate = vibratoRate;
+	}
+	
+	module.exports = vibratoConfig;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(3);
+	
+	var harmonicityConfig = function(data){
+	  var harmonicityRatio = nx.scale(data.value, 0.0, 1.0, 0.0, 2.0);
+	  duoSynth.harmonicity.value = harmonicityRatio;
+	}
+	
+	module.exports = harmonicityConfig;
+
 
 /***/ }
 /******/ ]);
