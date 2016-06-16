@@ -51,15 +51,15 @@
 	var keyboardConfig = __webpack_require__(3);
 	
 	//keyboard effect reqs
-	var filterTypeConfig = __webpack_require__(10);
-	var harmonicityConfig = __webpack_require__(4);
-	var vibratoConfig = __webpack_require__(5);
-	var voiceWaveConfig = __webpack_require__(9);
+	var filterTypeConfig = __webpack_require__(4);
+	var harmonicityConfig = __webpack_require__(5);
+	var vibratoConfig = __webpack_require__(6);
+	var voiceWaveConfig = __webpack_require__(7);
 	
 	//effect reqs
-	var chorusConfig = __webpack_require__(6);
-	var delayConfig = __webpack_require__(7);
-	var distortionConfig = __webpack_require__(8);
+	var chorusConfig = __webpack_require__(8);
+	var delayConfig = __webpack_require__(9);
+	var distortionConfig = __webpack_require__(10);
 	
 	//load the synth and all effects
 	nx.onload = function(){
@@ -19903,6 +19903,25 @@
 
 	var duoSynth = __webpack_require__(2);
 	
+	var filterTypeConfig = {
+	  filterChoices: ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'],
+	  filterTypeAssign0: function(data){
+	    duoSynth.voice0.filter._type = data.text;
+	  },
+	  filterTypeAssign1: function(data){
+	    duoSynth.voice1.filter._type = data.text;
+	  }
+	}
+	
+	module.exports = filterTypeConfig;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(2);
+	
 	var harmonicityConfig = function(data){
 	  var harmonicityRatio = nx.scale(data.value, 0.0, 1.0, 0.0, 2.0);
 	  duoSynth.harmonicity.value = harmonicityRatio;
@@ -19912,7 +19931,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var duoSynth = __webpack_require__(2);
@@ -19927,7 +19946,26 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(2);
+	
+	var voiceWaveConfig = {
+	  waveChoices: ['sine', 'sawtooth', 'square', 'triangle'],
+	  voiceWaveAssign0: function(data){
+	    duoSynth.voice0.oscillator.type = data.text;
+	  },
+	  voiceWaveAssign1: function(data){
+	    duoSynth.voice1.oscillator.type = data.text;
+	  }
+	}
+	
+	module.exports = voiceWaveConfig;
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tone = __webpack_require__(1);
@@ -19946,7 +19984,7 @@
 
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tone = __webpack_require__(1);
@@ -19964,7 +20002,7 @@
 
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tone = __webpack_require__(1);
@@ -19986,44 +20024,6 @@
 	}
 	
 	module.exports = distortionConfig;
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var duoSynth = __webpack_require__(2);
-	
-	var voiceWaveConfig = {
-	  waveChoices: ['sine', 'sawtooth', 'square', 'triangle'],
-	  voiceWaveAssign0: function(data){
-	    duoSynth.voice0.oscillator.type = data.text;
-	  },
-	  voiceWaveAssign1: function(data){
-	    duoSynth.voice1.oscillator.type = data.text;
-	  }
-	}
-	
-	module.exports = voiceWaveConfig;
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var duoSynth = __webpack_require__(2);
-	
-	var filterTypeConfig = {
-	  filterChoices: ['lowpass', 'highpass', 'bandpass', 'low shelf', 'high shelf', 'notch', 'all pass', 'peaking'],
-	  filterTypeAssign0: function(data){
-	    duoSynth.voice0.filter._type = data.text;
-	  },
-	  filterTypeAssign1: function(data){
-	    duoSynth.voice1.filter._type = data.text;
-	  }
-	}
-	
-	module.exports = filterTypeConfig;
 
 
 /***/ }
