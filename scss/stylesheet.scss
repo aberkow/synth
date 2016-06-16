@@ -12,7 +12,7 @@ $desktop: 'min-width: 1024px';
 $mainColor: #303F9F;
 $accentColor: #ff5722;
 $textColor: #fff;
-$linkColor: #c5cae9;
+$linkColor: tint($mainColor, 40%);
 
 //center mixin
 @mixin centerer {
@@ -50,37 +50,36 @@ body {
   @include outer-container;
   // text-align: center;
   .keyboard__ui {
-    @include span-columns(6);
-    @include shift(3);
+  //  @include span-columns(12);
     height: 8rem;
     width: 24rem;
     @media screen and ($tablet){
+      @include span-columns(6);
+      @include shift(3);
       height: 10rem;
       width: 35rem;
+    }
+    @media screen and ($desktop){
+      @include span-columns(6);
+      @include shift(3);
+      height: 12rem;
+      width: 38rem;
     }
   }
 }
 
 .synthControls {
+  @include outer-container;
   margin: 0.5rem;
 }
 
-.synthControls__wrapper-waves {
-  text-align: center;
+.synthControls__wrapper {
+  @include span-columns(6);
 }
 
-.synthControls__waves {
+.synthControls__waves, .synthControls__filters {
   width: 11rem;
   height: 3rem;
   display: inline-block;
   font-size: 24px;
-}
-
-.synthControls__wrapper-env {
-  text-align: center;;
-}
-
-.synthControls__envelope {
-  width: 11.5rem;
-  display: inline-block;
 }

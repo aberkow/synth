@@ -18,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.0.0",
+    "nexusui": "^1.0.8",
     "soundcloud": "^3.1.2",
     "tone": "^0.6.1"
   },

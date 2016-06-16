@@ -1,3 +1,4 @@
+//ToneJS req
 var tone = require('tone');
 
 //keyboard reqs
@@ -7,6 +8,7 @@ var keyboardConfig = require('./synth/keyboardConfig.js');
 //keyboard effect reqs
 var filterTypeConfig = require('./synth/filterTypeConfig.js');
 var harmonicityConfig = require('./synth/harmonicityConfig.js');
+var qAndFreqConfig = require('./synth/qAndFreqConfig.js');
 var vibratoConfig = require('./synth/vibratoConfig.js');
 var voiceWaveConfig = require('./synth/voiceWaveConfig.js');
 
@@ -90,18 +92,12 @@ nx.onload = function(){
     envelope.sustain = data.points[2].y;
     envelope.release = data.points[3].y;
   });
-  //filter Q and rolloff
+  //filter Q and frequency
   qAndFreq1.on('*', function(data){
-    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
-    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
-    duoSynth.voice0.filter.Q.input.value = qValue;
-    duoSynth.voice0.filter.frequency.input.value = freqValue;
+    qAndFreqConfig.qFreq0(data);
   });
   qAndFreq2.on('*', function(data){
-    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
-    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
-    duoSynth.voice1.filter.Q.input.value = qValue;
-    duoSynth.voice1.filter.frequency.input.value = freqValue;
+    qAndFreqConfig.qFreq1(data);
   });
 
   //controls for effects

@@ -44,6 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	//ToneJS req
 	var tone = __webpack_require__(1);
 	
 	//keyboard reqs
@@ -53,13 +54,14 @@
 	//keyboard effect reqs
 	var filterTypeConfig = __webpack_require__(4);
 	var harmonicityConfig = __webpack_require__(5);
-	var vibratoConfig = __webpack_require__(6);
-	var voiceWaveConfig = __webpack_require__(7);
+	var qAndFreqConfig = __webpack_require__(6);
+	var vibratoConfig = __webpack_require__(7);
+	var voiceWaveConfig = __webpack_require__(8);
 	
 	//effect reqs
-	var chorusConfig = __webpack_require__(8);
-	var delayConfig = __webpack_require__(9);
-	var distortionConfig = __webpack_require__(10);
+	var chorusConfig = __webpack_require__(9);
+	var delayConfig = __webpack_require__(10);
+	var distortionConfig = __webpack_require__(11);
 	
 	//load the synth and all effects
 	nx.onload = function(){
@@ -136,18 +138,12 @@
 	    envelope.sustain = data.points[2].y;
 	    envelope.release = data.points[3].y;
 	  });
-	  //filter Q and rolloff
+	  //filter Q and frequency
 	  qAndFreq1.on('*', function(data){
-	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
-	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
-	    duoSynth.voice0.filter.Q.input.value = qValue;
-	    duoSynth.voice0.filter.frequency.input.value = freqValue;
+	    qAndFreqConfig.qFreq0(data);
 	  });
 	  qAndFreq2.on('*', function(data){
-	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
-	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
-	    duoSynth.voice1.filter.Q.input.value = qValue;
-	    duoSynth.voice1.filter.frequency.input.value = freqValue;
+	    qAndFreqConfig.qFreq1(data);
 	  });
 	
 	  //controls for effects
@@ -19936,6 +19932,30 @@
 
 	var duoSynth = __webpack_require__(2);
 	
+	var qAndFreqConfig = {
+	  qFreq0: function(data){
+	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
+	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
+	    duoSynth.voice0.filter.Q.input.value = qValue(data);
+	    duoSynth.voice0.filter.frequency.input.value = freqValue;
+	  },
+	  qFreq1: function(data){
+	    var qValue = nx.scale(data.x, 0.0, 1.0, 0.0, 18.0);
+	    var freqValue = nx.scale(data.y, 0.0, 1.0, 30.0, 22000.0);
+	    duoSynth.voice1.filter.Q.input.value = qValue(data);
+	    duoSynth.voice1.filter.frequency.input.value = freqValue;
+	  }
+	}
+	
+	module.exports = qAndFreqConfig;
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var duoSynth = __webpack_require__(2);
+	
 	var vibratoConfig = function(data){
 	  var vibratoRate = nx.scale(data.x, 0.0, 1.0, 0.0, 20.0);
 	  duoSynth.vibratoAmount = data.y;
@@ -19946,7 +19966,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var duoSynth = __webpack_require__(2);
@@ -19965,7 +19985,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tone = __webpack_require__(1);
@@ -19984,7 +20004,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tone = __webpack_require__(1);
@@ -20002,7 +20022,7 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var tone = __webpack_require__(1);

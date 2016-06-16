@@ -390,37 +390,55 @@ body {
   display: table; }
 
 .keyboard .keyboard__ui {
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 48.82117%;
-  margin-left: 25.58941%;
   height: 8rem;
   width: 24rem; }
 
-.keyboard .keyboard__ui:last-child {
-  margin-right: 0; }
-
 @media screen and (min-width: 768px) {
   .keyboard .keyboard__ui {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 48.82117%;
+    margin-left: 25.58941%;
     height: 10rem;
-    width: 35rem; } }
+    width: 35rem; }
+  .keyboard .keyboard__ui:last-child {
+    margin-right: 0; } }
+
+@media screen and (min-width: 1024px) {
+  .keyboard .keyboard__ui {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 48.82117%;
+    margin-left: 25.58941%;
+    height: 12rem;
+    width: 38rem; }
+  .keyboard .keyboard__ui:last-child {
+    margin-right: 0; } }
 
 .synthControls {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
   margin: 0.5rem; }
 
-.synthControls__wrapper-waves {
-  text-align: center; }
+.synthControls::after {
+  clear: both;
+  content: "";
+  display: table; }
 
-.synthControls__waves {
+.synthControls__wrapper {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 48.82117%; }
+
+.synthControls__wrapper:last-child {
+  margin-right: 0; }
+
+.synthControls__waves, .synthControls__filters {
   width: 11rem;
   height: 3rem;
   display: inline-block;
   font-size: 24px; }
-
-.synthControls__wrapper-env {
-  text-align: center; }
-
-.synthControls__envelope {
-  width: 11.5rem;
-  display: inline-block; }

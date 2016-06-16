@@ -46,4 +46,4 @@ gulp.task('updateStyles', ['sass', 'buildStyles']);
 
 gulp.task('default', ['jshint', 'sass', 'watch']);
 
-gulp.task('build', ['jshint', 'webpack', 'sass', 'buildStyles']);
+gulp.task('build', ['jshint', 'sass', 'buildStyles', 'webpack']);
