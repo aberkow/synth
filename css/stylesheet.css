@@ -379,43 +379,30 @@ body {
   .header__title {
     font-size: 4rem; } }
 
-.keyboard {
+.keyboard__wrapper {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto; }
 
-.keyboard::after {
+.keyboard__wrapper::after {
   clear: both;
   content: "";
   display: table; }
 
-.keyboard .keyboard__ui {
-  height: 8rem;
-  width: 24rem; }
+@media screen and (min-width: 375px) {
+  .keyboard__wrapper #keyboard.keyboard__ui {
+    max-height: 8rem;
+    max-width: 24rem; } }
 
 @media screen and (min-width: 768px) {
-  .keyboard .keyboard__ui {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 48.82117%;
-    margin-left: 25.58941%;
-    height: 10rem;
-    width: 35rem; }
-  .keyboard .keyboard__ui:last-child {
-    margin-right: 0; } }
+  .keyboard__wrapper #keyboard.keyboard__ui {
+    max-height: 10rem;
+    max-width: 35rem; } }
 
 @media screen and (min-width: 1024px) {
-  .keyboard .keyboard__ui {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 48.82117%;
-    margin-left: 25.58941%;
-    height: 12rem;
-    width: 38rem; }
-  .keyboard .keyboard__ui:last-child {
-    margin-right: 0; } }
+  .keyboard__wrapper #keyboard.keyboard__ui {
+    max-height: 12rem;
+    max-width: 38rem; } }
 
 .synthControls {
   max-width: 68em;
@@ -437,7 +424,8 @@ body {
 .synthControls__wrapper:last-child {
   margin-right: 0; }
 
-.synthControls__waves, .synthControls__filters {
+#voiceWave1.synthControls__waves, #voiceWave2.synthControls__waves, #filterType1.synthControls__filters,
+#filterType2.synthControls__filters {
   width: 11rem;
   height: 3rem;
   display: inline-block;

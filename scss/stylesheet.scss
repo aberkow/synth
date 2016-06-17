@@ -22,6 +22,12 @@ $linkColor: tint($mainColor, 40%);
   transform: translate(-50%, -50%);
 }
 
+@mixin centerer-x {
+  position: absolute;
+  left: 50%;
+  transform: translate(0, -50%);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -46,24 +52,25 @@ body {
   }
 }
 
-.keyboard {
+.keyboard__wrapper {
   @include outer-container;
   // text-align: center;
-  .keyboard__ui {
-  //  @include span-columns(12);
-    height: 8rem;
-    width: 24rem;
+  #keyboard.keyboard__ui {
+    @media screen and ($phone){
+      max-height: 8rem;
+      max-width: 24rem;
+    }
     @media screen and ($tablet){
-      @include span-columns(6);
-      @include shift(3);
-      height: 10rem;
-      width: 35rem;
+      // @include span-columns(6);
+      // @include shift(3);
+      max-height: 10rem;
+      max-width: 35rem;
     }
     @media screen and ($desktop){
-      @include span-columns(6);
-      @include shift(3);
-      height: 12rem;
-      width: 38rem;
+      // @include span-columns(6);
+      // @include shift(3);
+      max-height: 12rem;
+      max-width: 38rem;
     }
   }
 }
@@ -77,7 +84,8 @@ body {
   @include span-columns(6);
 }
 
-.synthControls__waves, .synthControls__filters {
+#voiceWave1.synthControls__waves, #voiceWave2.synthControls__waves, #filterType1.synthControls__filters,
+#filterType2.synthControls__filters {
   width: 11rem;
   height: 3rem;
   display: inline-block;

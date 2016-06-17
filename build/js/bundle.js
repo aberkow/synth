@@ -66,7 +66,7 @@
 	//load the synth and all effects
 	nx.onload = function(){
 	  //keyboard control
-	  keyboard1.on('*', function(data){
+	  keyboard.on('*', function(data){
 	    keyboardConfig(data);
 	  });
 	
