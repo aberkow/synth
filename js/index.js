@@ -21,6 +21,7 @@ var distortionConfig = require('./effects/distortionConfig.js');
 nx.onload = function(){
   //keyboard control
   keyboard.on('*', function(data){
+    console.log(data);
     keyboardConfig(data);
   });
 
@@ -86,7 +87,7 @@ nx.onload = function(){
     envelope.release = data.points[3].y;
   });
   filterAsdr2.on('*', function(data){
-    var envelope = duoSynth.voice1.filterEnvelope
+    var envelope = duoSynth.voice1.filterEnvelope;
     envelope.attack = data.points[0].y;
     envelope.decay = data.points[1].y;
     envelope.sustain = data.points[2].y;
@@ -113,4 +114,4 @@ nx.onload = function(){
   chorusControl.on('*', function(data){
     chorusConfig(data);
   });
-}
+};
