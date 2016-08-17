@@ -19,39 +19,42 @@
   <!--Synth controls -->
   <section class="synthControls">
     <div class="synthControls__wrapper">
-      <canvas class="synthControls__waves" nx='select' id="voiceWave1"
-      ></canvas>
-      <canvas class="synthControls__waves" nx='select' id="voiceWave2"></canvas>
+      
+        <canvas class="synthControls__waves" nx='select' id="voiceWave1"
+        label="Waveform 1"></canvas>
+      
+        <canvas class="synthControls__waves" nx='select' id="voiceWave2" label="Waveform 1"></canvas>
+      
     <!-- </div>
     <div class="synthControls__wrapper"> -->
-      <canvas class="synthControls__envelope" nx='envelope' id="asdr1"></canvas>
-      <canvas class="synthControls__envelope" nx='envelope' id="asdr2"></canvas>
+      <canvas class="synthControls__envelope" nx='envelope' id="asdr1" label="ASDR 1"></canvas>
+      <canvas class="synthControls__envelope" nx='envelope' id="asdr2" label="ASDR 2"></canvas>
     <!-- </div>
     <div class="synthControls__wrapper"> -->
-      <canvas class="position" nx='position' id="vibrato"></canvas>
-      <canvas class="synthControls__dial" nx='dial' id="harmonicity"></canvas>
+      <canvas class="position" nx='position' id="vibrato" label="Vibrato"></canvas>
+      <canvas class="synthControls__dial" nx='dial' id="harmonicity" label="Harmonicity"></canvas>
     </div>
     <div class="synthControls__wrapper">
       <canvas class="synthControls__filters" nx='select' id="filterType1"
-      ></canvas>
-      <canvas class="synthControls__filters" nx='select' id="filterType2"></canvas>
+      label="Filter Select 1"></canvas>
+      <canvas class="synthControls__filters" nx='select' id="filterType2" label="Filter Select 2"></canvas>
     <!-- </div>
     <div class="synthControls__wrapper"> -->
-      <canvas class="synthControls__envelope" nx='envelope' id="filterAsdr1"></canvas>
-      <canvas class="synthControls__envelope" nx='envelope' id="filterAsdr2"></canvas>
+      <canvas class="synthControls__envelope" nx='envelope' id="filterAsdr1" label="Filter ASDR 1"></canvas>
+      <canvas class="synthControls__envelope" nx='envelope' id="filterAsdr2" label="Filter ASDR 2"></canvas>
     <!-- </div>
     <div class="synthControls__wrapper"> -->
-      <canvas id="qAndFreq1" nx='position' class="position"></canvas>
-      <canvas id="qAndFreq2" nx='position' class="position"></canvas>
+      <canvas id="qAndFreq1" nx='position' class="position" label="Q/Freq cntrl 1"></canvas>
+      <canvas id="qAndFreq2" nx='position' class="position" label="Q/Freq cntrl 2"></canvas>
     </div>
 
   </section>
 
   <!-- General effects -->
   <section class="synthEffcts">
-    <canvas class="synthEffects__delay" nx='dial' id="delayControl"></canvas>
-    <canvas class="synthEffects__distortion" nx='dial' id="distortionControl"></canvas>
-    <canvas class="synthEffects__chorus" nx='position' id="chorusControl"></canvas>
+    <canvas class="synthEffects__delay" nx='dial' id="delayControl" label="Delay"></canvas>
+    <canvas class="synthEffects__distortion" nx='dial' id="distortionControl" label="Distortion"></canvas>
+    <canvas class="synthEffects__chorus" nx='position' id="chorusControl" label="Chorus"></canvas>
   </section>
 <!-- footer -->
   <footer class="footer">

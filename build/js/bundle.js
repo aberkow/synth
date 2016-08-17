@@ -65,6 +65,8 @@
 	
 	//load the synth and all effects
 	nx.onload = function(){
+	  
+	
 	  //keyboard control
 	  keyboard.on('*', function(data){
 	    console.log(data);
@@ -84,6 +86,7 @@
 	  voiceWave2.on('*', function(data){
 	    voiceWaveConfig.voiceWaveAssign1(data);
 	  });
+	
 	
 	  //asdr envelopes for synth
 	  asdr1.on('*', function(data){

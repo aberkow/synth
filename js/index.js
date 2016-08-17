@@ -19,6 +19,8 @@ var distortionConfig = require('./effects/distortionConfig.js');
 
 //load the synth and all effects
 nx.onload = function(){
+  
+
   //keyboard control
   keyboard.on('*', function(data){
     console.log(data);
@@ -38,6 +40,7 @@ nx.onload = function(){
   voiceWave2.on('*', function(data){
     voiceWaveConfig.voiceWaveAssign1(data);
   });
+
 
   //asdr envelopes for synth
   asdr1.on('*', function(data){
